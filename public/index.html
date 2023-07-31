@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.115.4"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Yecoder</title>
+
+<meta name="description" content="">
+<meta name="author" content="Saeed Vaziry">
+<link rel="canonical" href="https://yecoder.com/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://yecoder.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://yecoder.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yecoder.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://yecoder.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://yecoder.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://yecoder.com/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://yecoder.com/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content=""/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Yecoder",
+  "url": "https://yecoder.com/",
+  "description": "",
+  "thumbnailUrl": "https://yecoder.com/favicon.ico",
+  "sameAs": [
+      
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://yecoder.com/" accesskey="h" title="Yecoder (Alt + H)">Yecoder</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://yecoder.com/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yecoder.com/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="first-entry"> 
+  <header class="entry-header">
+    <h2>Configure Logstash, Elasticsearch, and Kibana with Docker
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place....</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-07-22 13:48:44 +0000 +0000'>July 22, 2023</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Configure Logstash, Elasticsearch, and Kibana with Docker" href="https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>DBGate - OpenSource and Modern DB Client
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>DBGate is an open-source database client which has a modern UI.
+I am still checking it but one of the coolest features that I saw was the web application!
+You can install the web application on the server and then you have access to the database with an amazing client!</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-04-10 13:41:00 +0000 +0000'>April 10, 2023</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to DBGate - OpenSource and Modern DB Client" href="https://yecoder.com/posts/dbgate-opensource-and-modern-db-client/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Get one link for all of your links!
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>iBio is a FREE and Open Source bio link generator project built with Laravel and Vue.js
+Visit the Website
+Source Code</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-01-05 13:40:00 +0000 +0000'>January 5, 2023</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Get one link for all of your links!" href="https://yecoder.com/posts/get-one-link-for-all-of-your-links/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Automated pipeline tests, version bumping and deployments with Gitlab
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-19 13:31:00 +0000 +0000'>August 19, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Automated pipeline tests, version bumping and deployments with Gitlab" href="https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Run PHPUnit tests, multiple times with different data sets
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>So most of you might know this, Specially you old-school PHP developers 🙂 but it’s not gonna fill the internet’s capacity so let me be happy by writing this post.
+You might have seen some PHPUnit tests with arguments! Have you asked yourself how it’s possible and who sends those arguments to these tests? The answer is simple! Data Providers
+With PHPUnit, you can define arguments for your test function, and in the DocBlock you mention that there is a data provider for this function, and inside that function just provide the data 🙂...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-07-12 13:28:00 +0000 +0000'>July 12, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Run PHPUnit tests, multiple times with different data sets" href="https://yecoder.com/posts/run-phpunit-tests-multiple-times-with-different-data-sets/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Convert picture to Tailwindcss
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>In this video, I’ll show you how you can simply convert a picture of a design to a Tailwindcss code</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-06-05 13:24:00 +0000 +0000'>June 5, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Convert picture to Tailwindcss" href="https://yecoder.com/posts/convert-picture-to-tailwindcss/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Run Laravel tests on GitHub Actions
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Imagine yourself in a big team coding on a single project. In our scenario the project is Laravel. There would be tens of Pull Requests waiting to merge but you need to make sure that nothing goes wrong after the merge. Obviously, you’ll have tests in your project but it would be very tricky to go through the all PRs and run the tests on your local.
+GitHub Actions Thanks to GitHub there is a feature called Actions that comes in handy in this case....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-12 13:20:00 +0000 +0000'>April 12, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Run Laravel tests on GitHub Actions" href="https://yecoder.com/posts/run-laravel-tests-on-github-actions/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mysql auto backup to Dropbox
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>In this article, I’m gonna show you how you can easily configure an auto backup Mysql database to a Dropbox account using Mysqldump and Cron jobs on an Ubuntu server.
+Set up the Dropbox To store the backup files in Dropbox, You’ll need, of course, a Dropbox account and an API Key associated with it.
+Go to your Dropbox account and generate an API Key and save it.
+Backup Let’s make a backup with the mysqldump command:...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-03-10 13:14:00 +0000 +0000'>March 10, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Mysql auto backup to Dropbox" href="https://yecoder.com/posts/mysql-auto-backup-to-dropbox/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>How to monitor Laravel application servers
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Laravel Monitoring is a package by myself so you can monitor your Laravel application’s server resources like CPU, Disk, and Memory
+This package provides a beautiful dashboard with a fancy chart showing the server’s resource usage from one hour to a day.
+Multi-Server support The amazing part of this package which is my favorite part also, Is you can see monitor all of your servers in one place!
+For example, consider that you have several servers running the same source code....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-02-20 12:59:00 +0000 +0000'>February 20, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to How to monitor Laravel application servers" href="https://yecoder.com/posts/how-to-monitor-laravel-application-servers/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Laravel Custom Helpers, Facades, and Testing Fakes
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.
+Commands Since we might have many commands, I would create an interface first.
+// app/Commands/Command.php namespace App\SSHCommands; use App\Contracts\SSHCommand; interface Command { public function content(); } And then an example command.
+// app/Commands/DirectoryListCommand.php namespace App\SSHCommands; use App\Contracts\SSHCommand; class DirectoryListCommand implements Command { public function content() { return &#34;ls -la&#34;; } } Helper Alright....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-02-18 11:56:00 +0000 +0000'>February 18, 2022</span>&nbsp;·&nbsp;Saeed Vaziry</footer>
+  <a class="entry-link" aria-label="post link to Laravel Custom Helpers, Facades, and Testing Fakes" href="https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://yecoder.com/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://yecoder.com/">Yecoder</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Automated pipeline tests, version bumping and deployments with Gitlab | Yecoder</title>
+<meta name="keywords" content="automation, deployment, gitlab, laravel, tests">
+<meta name="description" content="This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:">
+<meta name="author" content="Saeed Vaziry">
+<link rel="canonical" href="https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://yecoder.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://yecoder.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yecoder.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://yecoder.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://yecoder.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Automated pipeline tests, version bumping and deployments with Gitlab" />
+<meta property="og:description" content="This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-19T13:31:00+00:00" />
+<meta property="article:modified_time" content="2022-08-19T13:31:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Automated pipeline tests, version bumping and deployments with Gitlab"/>
+<meta name="twitter:description" content="This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://yecoder.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Automated pipeline tests, version bumping and deployments with Gitlab",
+      "item": "https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automated pipeline tests, version bumping and deployments with Gitlab",
+  "name": "Automated pipeline tests, version bumping and deployments with Gitlab",
+  "description": "This is one of my favorite topics! Setting up a fully automated deployment.\nI want to share with you how to set up a fully automated deployment including tests and version bumping.\nI am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!\nIf you don’t want to read the post and jump to the Repo:",
+  "keywords": [
+    "automation", "deployment", "gitlab", "laravel", "tests"
+  ],
+  "articleBody": "This is one of my favorite topics! Setting up a fully automated deployment.\nI want to share with you how to set up a fully automated deployment including tests and version bumping.\nI am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!\nIf you don’t want to read the post and jump to the Repo:\nLaravel Auto Deploy Gitlab\nStory When you push any commit to your main branch it will start testing, If it was successful then it will start to bump a new version and generate a tag for that commit. After that, you’ll see a tag on the tags page of Gitlab. To deploy that tag to your server, You just need to open the pipeline and start the deployment job!\nIf you feel confused, Don’t worry we’ll get back to this later in this post.\nSetup Create .gitlab-ci.yml file at the root of your project and continue reading this post 🙂\nTests Before we start, I assume that you have your project ready and your project has some tests. If it doesn’t have any tests (I hope it does 🙂), skip the test part.\nTo create test pipelines simply add the following content to your .gitlab-ci.yml\nstages: - test test: stage: test image: php:8.1-fpm services: - mysql:lates variables: MYSQL_DATABASE: $DB_DATABASE MYSQL_ROOT_PASSWORD: DbRootPass DB_HOST: mysql DB_USERNAME: root DB_PASSWORD: DbRootPass before_script: - apt-get update - apt-get install -qq libzip-dev git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip unzip - docker-php-ext-install pdo_mysql zip - curl --silent --show-error \"https://getcomposer.org/installer\" | php -- --install-dir=/usr/local/bin --filename=composer script: - cp .env.example .env - composer install - php artisan db:create - php artisan key:generate - php artisan --env=testing migrate - php artisan test cache: key: ${CI_COMMIT_REF_SLUG} paths: - vendor/ except: refs: - tags variables: - $CI_COMMIT_TITLE =~ /^RELEASE:.+$/ If you look carefully at the code above you will see that I’ve disabled running tests on the tags because the tests are being tested on the main branch so no need to test them again on tags! but it’s up to you.\nBumping Versions What do I mean by this? So the idea is to generate a version using semantic versioning when there was a push to the main branch.\nI am using Semantic Release library to achieve that. This library checks if there was a commit that can be considered a version then it will release a tag (version) for that. By default, it uses the Commit Analyzer with conversational commits, But you can change it of course. For example if you want to release a feature you must have a commit message like this: feat(something): something else\nExtend the .gitlab-ci.yml file with the following codes:\nstages: - test - version test: ... version: stage: version image: node:alpine before_script: - apk add --no-cache git - npm install @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/git @semantic-release/gitlab @semantic-release/npm @semantic-release/release-notes-generator conventional-changelog-conventionalcommits semantic-release script: - npx semantic-release only: - main variables: GL_TOKEN: $GL_TOKEN except: refs: - tags variables: - $CI_COMMIT_TITLE =~ /^RELEASE:.+$/ Then create a Gitlab Token on your repository with write access and put it on the pipeline environments into GL_TOKEN key.\nAnd then put the following content into your package.json file\n... \"release\": { \"branches\": [ \"main\" ], \"plugins\": [ \"@semantic-release/commit-analyzer\", \"@semantic-release/release-notes-generator\" ] }, ... If you push these changes you will see some pipelines like below:\nAnd if it was successful:\nAnd you should be able to see the new version has been generated on the tags page.\nDeployment Let’s now deploy our project to the server 🚀\nI assume that you have your production server ready and you already set it up and deployed the first version.\nThe plan is to create a new pipeline for the deployment and make it manual and only available on the tags! So you can deploy any tags (versions) manually by pressing a button.\nFirst, SSH to your server and create a new user or use the current user for the deployments.\nGenerate an SSH key if you don’t have one already and make sure that you generate it without a passphrase.\n# As the deployer user on server # Copy the content of public key to authorized_keys cat ~/.ssh/id_rsa.pub \u003e\u003e ~/.ssh/authorized_keys # Copy the private key text block cat ~/.ssh/id_rsa Copy the generated private key and store it on GitLab pipeline variables into PROD_SERVER_KEY\nYou should have these keys on your GitLab pipeline variables\nPROD_SERVER_KEY -\u003e The private key that you created PROD_SERVER_IP -\u003e Your server's IP Address PROD_SERVER_PATH -\u003e Root path of your application in the server PROD_SERVER_USER -\u003e Your server's user Make sure all of them are unprotected and not masked so the pipeline can have access to them when running on the Tags.\nInstall Laravel Envoy and configure it according to my sample configuration\nYou can skip this step and set up your deployment script inside the .gitlab-ci.yml\nExtend your .gitlab-ci.yml and add deploy stage to it.\nstages: - test - version - deploy test: ... version: ... deploy: stage: deploy image: php:8.1-fpm variables: PROD_SERVER_IP: $PROD_SERVER_IP PROD_SERVER_USER: $PROD_SERVER_USER PROD_SERVER_KEY: $PROD_SERVER_KEY PROD_SERVER_PATH: $PROD_SERVER_PATH before_script: - apt-get update - apt-get install -qq libzip-dev git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip unzip - docker-php-ext-install pdo_mysql zip - curl --silent --show-error \"https://getcomposer.org/installer\" | php -- --install-dir=/usr/local/bin --filename=composer - 'which ssh-agent || ( apt-get update -y \u0026\u0026 apt-get install openssh-client git -y )' - eval $(ssh-agent -s) - echo \"$PROD_SERVER_KEY\" | tr -d '\\r' | ssh-add - - mkdir -p ~/.ssh - chmod 700 ~/.ssh - ssh-keyscan \"$PROD_SERVER_IP\" \u003e\u003e ~/.ssh/known_hosts - chmod 644 ~/.ssh/known_hosts script: - composer install - php ./vendor/bin/envoy run deploy only: - tags when: manual If you don’t use Laravel Envoy then just replace the script section with your own script.\nThis configuration will generate a new pipeline that is available only in tags and it is manual like the screenshot below:\nWhen you want to deploy any tag, Just open the pipeline and press the Play button.\nYou can see the whole project’s source code here including the pipelines.\nI hope you enjoyed ❤️\n",
+  "wordCount" : "1012",
+  "inLanguage": "en",
+  "datePublished": "2022-08-19T13:31:00Z",
+  "dateModified": "2022-08-19T13:31:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Saeed Vaziry"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yecoder",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://yecoder.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://yecoder.com/" accesskey="h" title="Yecoder (Alt + H)">Yecoder</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://yecoder.com/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yecoder.com/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Automated pipeline tests, version bumping and deployments with Gitlab
+    </h1>
+    <div class="post-meta"><span title='2022-08-19 13:31:00 +0000 +0000'>August 19, 2022</span>&nbsp;·&nbsp;Saeed Vaziry
+
+</div>
+  </header> 
+  <div class="post-content"><p>This is one of my favorite topics! Setting up a fully automated deployment.</p>
+<p>I want to share with you how to set up a fully automated deployment including tests and version bumping.</p>
+<p>I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!</p>
+<p>If you don’t want to read the post and jump to the Repo:</p>
+<p><a href="https://gitlab.com/saeedvaziry/laravel-auto-deploy">Laravel Auto Deploy Gitlab</a></p>
+<h2 id="story">Story<a hidden class="anchor" aria-hidden="true" href="#story">#</a></h2>
+<p>When you push any commit to your main branch it will start testing, If it was successful then it will start to bump a new version and generate a tag for that commit. After that, you’ll see a tag on the tags page of Gitlab. To deploy that tag to your server, You just need to open the pipeline and start the deployment job!</p>
+<p>If you feel confused, Don’t worry we’ll get back to this later in this post.</p>
+<h2 id="setup">Setup<a hidden class="anchor" aria-hidden="true" href="#setup">#</a></h2>
+<p>Create <code>.gitlab-ci.yml</code> file at the root of your project and continue reading this post 🙂</p>
+<h2 id="tests">Tests<a hidden class="anchor" aria-hidden="true" href="#tests">#</a></h2>
+<p>Before we start, I assume that you have your project ready and your project has some tests. If it doesn’t have any tests (I hope it does 🙂), skip the test part.</p>
+<p>To create test pipelines simply add the following content to your <code>.gitlab-ci.yml</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">stages</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">test</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">php:8.1-fpm</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">mysql:lates</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">MYSQL_DATABASE</span>: <span style="color:#ae81ff">$DB_DATABASE</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">MYSQL_ROOT_PASSWORD</span>: <span style="color:#ae81ff">DbRootPass</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">DB_HOST</span>: <span style="color:#ae81ff">mysql</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">DB_USERNAME</span>: <span style="color:#ae81ff">root</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">DB_PASSWORD</span>: <span style="color:#ae81ff">DbRootPass</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">before_script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">apt-get update</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">apt-get install -qq libzip-dev git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip unzip</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker-php-ext-install pdo_mysql zip</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">curl --silent --show-error &#34;https://getcomposer.org/installer&#34; | php -- --install-dir=/usr/local/bin --filename=composer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">cp .env.example .env</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">composer install</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">php artisan db:create</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">php artisan key:generate</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">php artisan --env=testing migrate</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">php artisan test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cache</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">key</span>: <span style="color:#ae81ff">${CI_COMMIT_REF_SLUG}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">paths</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">vendor/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">except</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">refs</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">tags</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">$CI_COMMIT_TITLE =~ /^RELEASE:.+$/</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<p>If you look carefully at the code above you will see that I’ve disabled running tests on the tags because the tests are being tested on the main branch so no need to test them again on tags! but it’s up to you.</p>
+<h2 id="bumping-versions">Bumping Versions<a hidden class="anchor" aria-hidden="true" href="#bumping-versions">#</a></h2>
+<p>What do I mean by this? So the idea is to generate a version using semantic versioning when there was a push to the main branch.</p>
+<p>I am using <a href="https://github.com/semantic-release/semantic-release">Semantic Release</a> library to achieve that. This library checks if there was a commit that can be considered a version then it will release a tag (version) for that. By default, it uses the Commit Analyzer with <a href="https://www.conventionalcommits.org/">conversational commits</a>, But you can change it of course. For example if you want to release a feature you must have a commit message like this: <code>feat(something): something else</code></p>
+<p>Extend the <code>.gitlab-ci.yml</code> file with the following codes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">stages</span>:
+</span></span><span style="display:flex;"><span>	- <span style="color:#ae81ff">test</span>
+</span></span><span style="display:flex;"><span>	- <span style="color:#ae81ff">version</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">test</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">version</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">version</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">node:alpine</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">before_script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">apk add --no-cache git</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">npm install @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/git @semantic-release/gitlab @semantic-release/npm @semantic-release/release-notes-generator conventional-changelog-conventionalcommits semantic-release</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">npx semantic-release</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">only</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">main</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">GL_TOKEN</span>: <span style="color:#ae81ff">$GL_TOKEN</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">except</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">refs</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">tags</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">$CI_COMMIT_TITLE =~ /^RELEASE:.+$/</span>
+</span></span></code></pre></div><p>Then create a Gitlab Token on your repository with write access and put it on the pipeline environments into <code>GL_TOKEN</code> key.</p>
+<p>And then put the following content into your <code>package.json</code> file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&#34;release&#34;: </span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;branches&#34;: </span>[
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;main&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;plugins&#34;: </span>[
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;@semantic-release/commit-analyzer&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;@semantic-release/release-notes-generator&#34;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>},
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>If you push these changes you will see some pipelines like below:</p>
+<p><img loading="lazy" src="/images/automated-pipelines-1.png" alt="Pipelines"  />
+</p>
+<p>And if it was successful:</p>
+<p><img loading="lazy" src="/images/automated-pipelines-2.png" alt="Pipelines"  />
+</p>
+<p>And you should be able to see the new version has been generated on the tags page.</p>
+<h2 id="deployment">Deployment<a hidden class="anchor" aria-hidden="true" href="#deployment">#</a></h2>
+<p>Let’s now deploy our project to the server 🚀</p>
+<p>I assume that you have your production server ready and you already set it up and deployed the first version.</p>
+<p>The plan is to create a new pipeline for the deployment and make it manual and only available on the tags! So you can deploy any tags (versions) manually by pressing a button.</p>
+<p><img loading="lazy" src="/images/automated-pipelines-3.png" alt="Pipelines"  />
+</p>
+<p>First, SSH to your server and create a new user or use the current user for the deployments.</p>
+<p><a href="https://docs.gitlab.com/ee/user/ssh.html">Generate an SSH key</a> if you don’t have one already and make sure that you generate it without a passphrase.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># As the deployer user on server</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Copy the content of public key to authorized_keys</span>
+</span></span><span style="display:flex;"><span>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Copy the private key text block</span>
+</span></span><span style="display:flex;"><span>cat ~/.ssh/id_rsa
+</span></span></code></pre></div><p>Copy the generated private key and store it on GitLab pipeline variables into <code>PROD_SERVER_KEY</code></p>
+<p>You should have these keys on your GitLab pipeline variables</p>
+<pre tabindex="0"><code>PROD_SERVER_KEY -&gt; The private key that you created
+PROD_SERVER_IP -&gt; Your server&#39;s IP Address
+PROD_SERVER_PATH -&gt; Root path of your application in the server
+PROD_SERVER_USER -&gt; Your server&#39;s user
+</code></pre><p>Make sure all of them are unprotected and not masked so the pipeline can have access to them when running on the Tags.</p>
+<p><img loading="lazy" src="/images/automated-pipelines-4.png" alt="Pipelines"  />
+</p>
+<p>Install <a href="https://laravel.com/docs/9.x/envoy">Laravel Envoy</a> and configure it according to my <a href="https://gitlab.com/saeedvaziry/laravel-auto-deploy/-/blob/main/Envoy.blade.php">sample configuration</a></p>
+<p>You can skip this step and set up your deployment script inside the <code>.gitlab-ci.yml</code></p>
+<p>Extend your <code>.gitlab-ci.yml</code> and add deploy stage to it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">stages</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">test</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">version</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">deploy</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">test</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">version</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">deploy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">php:8.1-fpm</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">PROD_SERVER_IP</span>: <span style="color:#ae81ff">$PROD_SERVER_IP</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">PROD_SERVER_USER</span>: <span style="color:#ae81ff">$PROD_SERVER_USER</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">PROD_SERVER_KEY</span>: <span style="color:#ae81ff">$PROD_SERVER_KEY</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">PROD_SERVER_PATH</span>: <span style="color:#ae81ff">$PROD_SERVER_PATH</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">before_script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">apt-get update</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">apt-get install -qq libzip-dev git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev zip unzip</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker-php-ext-install pdo_mysql zip</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">curl --silent --show-error &#34;https://getcomposer.org/installer&#34; | php -- --install-dir=/usr/local/bin --filename=composer</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#39;which ssh-agent || ( apt-get update -y &amp;&amp; apt-get install openssh-client git -y )&#39;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">eval $(ssh-agent -s)</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">echo &#34;$PROD_SERVER_KEY&#34; | tr -d &#39;\r&#39; | ssh-add -</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">mkdir -p ~/.ssh</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">chmod 700 ~/.ssh</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">ssh-keyscan &#34;$PROD_SERVER_IP&#34; &gt;&gt; ~/.ssh/known_hosts</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">chmod 644 ~/.ssh/known_hosts</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">composer install</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">php ./vendor/bin/envoy run deploy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">only</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">tags</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">manual</span>
+</span></span></code></pre></div><p>If you don’t use Laravel Envoy then just replace the <code>script</code> section with your own script.</p>
+<p>This configuration will generate a new pipeline that is available only in tags and it is manual like the screenshot below:</p>
+<p><img loading="lazy" src="/images/automated-pipelines-5.png" alt="Pipelines"  />
+</p>
+<p>When you want to deploy any tag, Just open the pipeline and press the <code>Play</code> button.</p>
+<p>You can see the whole project’s source code <a href="https://gitlab.com/saeedvaziry/laravel-auto-deploy">here</a> including the pipelines.</p>
+<p>I hope you enjoyed ❤️</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://yecoder.com/tags/automation/">automation</a></li>
+      <li><a href="https://yecoder.com/tags/deployment/">deployment</a></li>
+      <li><a href="https://yecoder.com/tags/gitlab/">gitlab</a></li>
+      <li><a href="https://yecoder.com/tags/laravel/">laravel</a></li>
+      <li><a href="https://yecoder.com/tags/tests/">tests</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://yecoder.com/">Yecoder</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

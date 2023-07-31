@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>kibana on Yecoder</title>
+    <link>https://yecoder.com/tags/kibana/</link>
+    <description>Recent content in kibana on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Jul 2023 13:48:44 +0000</lastBuildDate><atom:link href="https://yecoder.com/tags/kibana/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configure Logstash, Elasticsearch, and Kibana with Docker</title>
+      <link>https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/</link>
+      <pubDate>Sat, 22 Jul 2023 13:48:44 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/</guid>
+      <description>It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.</description>
+    </item>
+    
+  </channel>
+</rss>

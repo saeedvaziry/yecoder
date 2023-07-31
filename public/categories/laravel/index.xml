@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Laravel on Yecoder</title>
+    <link>https://yecoder.com/categories/laravel/</link>
+    <description>Recent content in Laravel on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 Aug 2022 13:31:00 +0000</lastBuildDate><atom:link href="https://yecoder.com/categories/laravel/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated pipeline tests, version bumping and deployments with Gitlab</title>
+      <link>https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/</link>
+      <pubDate>Fri, 19 Aug 2022 13:31:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/</guid>
+      <description>This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:</description>
+    </item>
+    
+    <item>
+      <title>Run Laravel tests on GitHub Actions</title>
+      <link>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</link>
+      <pubDate>Tue, 12 Apr 2022 13:20:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</guid>
+      <description>Imagine yourself in a big team coding on a single project. In our scenario the project is Laravel. There would be tens of Pull Requests waiting to merge but you need to make sure that nothing goes wrong after the merge. Obviously, you’ll have tests in your project but it would be very tricky to go through the all PRs and run the tests on your local.
+GitHub Actions Thanks to GitHub there is a feature called Actions that comes in handy in this case.</description>
+    </item>
+    
+    <item>
+      <title>How to monitor Laravel application servers</title>
+      <link>https://yecoder.com/posts/how-to-monitor-laravel-application-servers/</link>
+      <pubDate>Sun, 20 Feb 2022 12:59:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/how-to-monitor-laravel-application-servers/</guid>
+      <description>Laravel Monitoring is a package by myself so you can monitor your Laravel application’s server resources like CPU, Disk, and Memory
+This package provides a beautiful dashboard with a fancy chart showing the server’s resource usage from one hour to a day.
+Multi-Server support The amazing part of this package which is my favorite part also, Is you can see monitor all of your servers in one place!
+For example, consider that you have several servers running the same source code.</description>
+    </item>
+    
+    <item>
+      <title>Laravel Custom Helpers, Facades, and Testing Fakes</title>
+      <link>https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/</link>
+      <pubDate>Fri, 18 Feb 2022 11:56:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/</guid>
+      <description>Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.
+Commands Since we might have many commands, I would create an interface first.
+// app/Commands/Command.php namespace App\SSHCommands; use App\Contracts\SSHCommand; interface Command { public function content(); } And then an example command.
+// app/Commands/DirectoryListCommand.php namespace App\SSHCommands; use App\Contracts\SSHCommand; class DirectoryListCommand implements Command { public function content() { return &amp;#34;ls -la&amp;#34;; } } Helper Alright.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Categories on Yecoder</title>
+    <link>https://yecoder.com/categories/</link>
+    <description>Recent content in Categories on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Jul 2023 13:48:44 +0000</lastBuildDate><atom:link href="https://yecoder.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Devops</title>
+      <link>https://yecoder.com/categories/devops/</link>
+      <pubDate>Sat, 22 Jul 2023 13:48:44 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://yecoder.com/categories/docker/</link>
+      <pubDate>Sat, 22 Jul 2023 13:48:44 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Open Source</title>
+      <link>https://yecoder.com/categories/open-source/</link>
+      <pubDate>Sat, 22 Jul 2023 13:48:44 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/open-source/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>database</title>
+      <link>https://yecoder.com/categories/database/</link>
+      <pubDate>Mon, 10 Apr 2023 13:41:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/database/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Products</title>
+      <link>https://yecoder.com/categories/products/</link>
+      <pubDate>Thu, 05 Jan 2023 13:40:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/products/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Automation</title>
+      <link>https://yecoder.com/categories/automation/</link>
+      <pubDate>Fri, 19 Aug 2022 13:31:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/automation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Laravel</title>
+      <link>https://yecoder.com/categories/laravel/</link>
+      <pubDate>Fri, 19 Aug 2022 13:31:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/laravel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tests</title>
+      <link>https://yecoder.com/categories/tests/</link>
+      <pubDate>Fri, 19 Aug 2022 13:31:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/tests/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PHP</title>
+      <link>https://yecoder.com/categories/php/</link>
+      <pubDate>Tue, 12 Jul 2022 13:28:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PHPUnit</title>
+      <link>https://yecoder.com/categories/phpunit/</link>
+      <pubDate>Tue, 12 Jul 2022 13:28:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/phpunit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CSS</title>
+      <link>https://yecoder.com/categories/css/</link>
+      <pubDate>Sun, 05 Jun 2022 13:24:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/css/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tailwind</title>
+      <link>https://yecoder.com/categories/tailwind/</link>
+      <pubDate>Sun, 05 Jun 2022 13:24:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/tailwind/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Video</title>
+      <link>https://yecoder.com/categories/video/</link>
+      <pubDate>Sun, 05 Jun 2022 13:24:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/video/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://yecoder.com/categories/linux/</link>
+      <pubDate>Thu, 10 Mar 2022 13:14:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Package</title>
+      <link>https://yecoder.com/categories/package/</link>
+      <pubDate>Sun, 20 Feb 2022 12:59:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/categories/package/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

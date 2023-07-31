@@ -1,0 +1,27 @@
+baseURL = 'https://yecoder.com/'
+languageCode = 'en-us'
+title = 'Yecoder'
+theme = "PaperMod"
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 10
+  [[menu.main]]
+    identifier = "contact"
+    name = "Contact"
+    url = "/contact/"
+    weight = 10
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+[services]
+  [services.github]
+    disableInlineCSS = true
+  [services.twitter]
+    disableInlineCSS = true

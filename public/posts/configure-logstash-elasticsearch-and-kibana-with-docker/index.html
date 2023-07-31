@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Configure Logstash, Elasticsearch, and Kibana with Docker | Yecoder</title>
+<meta name="keywords" content="elasticsearch, elk, kibana, laravel, laravel-log-with-logstash, log-php-with-logstash, logging, logstash">
+<meta name="description" content="It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.">
+<meta name="author" content="Saeed Vaziry">
+<link rel="canonical" href="https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://yecoder.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://yecoder.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yecoder.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://yecoder.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://yecoder.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Configure Logstash, Elasticsearch, and Kibana with Docker" />
+<meta property="og:description" content="It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-22T13:48:44+00:00" />
+<meta property="article:modified_time" content="2023-07-22T13:48:44+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configure Logstash, Elasticsearch, and Kibana with Docker"/>
+<meta name="twitter:description" content="It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://yecoder.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Configure Logstash, Elasticsearch, and Kibana with Docker",
+      "item": "https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Configure Logstash, Elasticsearch, and Kibana with Docker",
+  "name": "Configure Logstash, Elasticsearch, and Kibana with Docker",
+  "description": "It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.\nLogging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.",
+  "keywords": [
+    "elasticsearch", "elk", "kibana", "laravel", "laravel-log-with-logstash", "log-php-with-logstash", "logging", "logstash"
+  ],
+  "articleBody": "It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.\nLogging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.\nSo finally the day has come! In this post, I am going to show you how you can configure a docker server to have Logstash, Elasticsearch, and Kibana and will show you how you can use it with PHP, Laravel\nRequirements To get started you need to have a server. A VPS would be enough.\nThen make sure you have installed git , docker and docker-compose.\nInstallation Clone the repo from the Github repository\ngit clone https://github.com/saeedvaziry/elk.git And then navigate to the folder\ncd elk Copy the .env file and fill it with your preferences\ncp .env.example .env The default .env should be enough but make sure you set a strong password to ELASTIC_PASSWORD inside the .env\nNow you may run the following command to bring up the containers:\ndocker-compose up -d This will download the images and boot up the containers and it may take a couple of minutes.\nAdd logging integration After all of the containers are booted you can log in to Kibana.\nSimply go to http://YOUR-SERVER-IP:5601 and log in via the Elastic credentials you have set in the .env file. If you’ve changed the Kibana port then you might navigate to that port instead of 5601.\nGo to the integrations from the side menu and find the Custom UDP Logs\nAdd Custom UDP Logs and configure it as bellow\nThen save the integration.\nKeep in mind that Listen Port here is 8000 which is the one you specified in your .env as LOGSTASH_PORT_UDP\nConfigure index pattern Go to Index Patterns and create an index pattern\nFill in the fields as the screenshot and Create it.\nYou are done here!\nSend your first Log Here is a sample PHP code so you can send your first log to Logstash\n\u003c?php $socket = fsockopen('udp://YOUR-SERVER-IP', 8000, $errno, $errstr); if (! $socket) { echo \"ERROR: $errno - $errstr\n\\n\"; } else { fwrite($socket, json_encode(['message' =\u003e 'Test log message'])); fclose($socket); } View the Logs After you run the code, You should be able to see the log in the Kibana on the Discovery menu.\nSimply navigate to Discovery page of Kibana and select logstash-* pattern to view the logs you receive\nCool stuff 😎\nUse Logstash in Laravel OK! My favorite part 🙂\nYou don’t have much to do here actually. Just need to create a custom log driver and send the logs via that custom driver to Logstash.\nGo to your config/logging.php file and create the custom driver there.\n'logstash' =\u003e [ 'driver' =\u003e 'custom', 'via' =\u003e \\App\\Loggers\\Logstash::class, 'host' =\u003e env('LOGSTASH_HOST', 'YOUR-SERVER-IP'), 'port' =\u003e env('LOGSTASH_PORT', '8000'), ], Now create \\App\\Loggers\\Logstash::class and add the following code there\n\u003c?php namespace App\\Loggers; use Monolog\\Formatter\\LogstashFormatter; use Monolog\\Handler\\SocketHandler; use Monolog\\Logger; use Monolog\\Processor\\WebProcessor; use Psr\\Log\\LoggerInterface; class Logstash { public function __invoke(array $config): LoggerInterface { $handler = new SocketHandler(\"udp://{$config['host']}:{$config['port']}\"); $handler-\u003esetFormatter(new LogstashFormatter(config('app.name'))); $handler-\u003epushProcessor(new WebProcessor); return new Logger('logstash', [$handler]); } } All done! Now you may send your first log like this\nLog::channel('logstash')-\u003einfo('Hello from Laravel'); Final word Logs are always handy, Don’t remove them from your applications 🙂\nI hope you enjoyed the post. Let me know what you think about it.\nSee you in the next one!\nCheers 🍻\n",
+  "wordCount" : "593",
+  "inLanguage": "en",
+  "datePublished": "2023-07-22T13:48:44Z",
+  "dateModified": "2023-07-22T13:48:44Z",
+  "author":{
+    "@type": "Person",
+    "name": "Saeed Vaziry"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yecoder",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://yecoder.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://yecoder.com/" accesskey="h" title="Yecoder (Alt + H)">Yecoder</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://yecoder.com/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yecoder.com/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Configure Logstash, Elasticsearch, and Kibana with Docker
+    </h1>
+    <div class="post-meta"><span title='2023-07-22 13:48:44 +0000 +0000'>July 22, 2023</span>&nbsp;·&nbsp;Saeed Vaziry
+
+</div>
+  </header> 
+  <div class="post-content"><p>It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.</p>
+<p>Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.</p>
+<p>So finally the day has come! In this post, I am going to show you how you can configure a docker server to have Logstash, Elasticsearch, and Kibana and will show you how you can use it with PHP, Laravel</p>
+<h2 id="requirements">Requirements<a hidden class="anchor" aria-hidden="true" href="#requirements">#</a></h2>
+<p>To get started you need to have a server. A VPS would be enough.</p>
+<p>Then make sure you have installed <code>git</code> , <code>docker</code> and <code>docker-compose</code>.</p>
+<h2 id="installation">Installation<a hidden class="anchor" aria-hidden="true" href="#installation">#</a></h2>
+<p>Clone the repo from the <a href="https://github.com/saeedvaziry/elk">Github repository</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/saeedvaziry/elk.git
+</span></span></code></pre></div><p>And then navigate to the folder</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd elk
+</span></span></code></pre></div><p>Copy the <code>.env</code> file and fill it with your preferences</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp .env.example .env
+</span></span></code></pre></div><p>The default <code>.env</code> should be enough but make sure you set a strong password to <code>ELASTIC_PASSWORD</code> inside the <code>.env</code></p>
+<p>Now you may run the following command to bring up the containers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose up -d
+</span></span></code></pre></div><p>This will download the images and boot up the containers and it may take a couple of minutes.</p>
+<h2 id="add-logging-integration">Add logging integration<a hidden class="anchor" aria-hidden="true" href="#add-logging-integration">#</a></h2>
+<p>After all of the containers are booted you can log in to Kibana.</p>
+<p>Simply go to <code>http://YOUR-SERVER-IP:5601</code> and log in via the Elastic credentials you have set in the <code>.env</code> file. If you’ve changed the Kibana port then you might navigate to that port instead of <code>5601</code>.</p>
+<p>Go to the <code>integrations</code> from the side menu and find the <code>Custom UDP Logs</code></p>
+<p><img loading="lazy" src="/images/elk-1.png" alt="ELK"  />
+</p>
+<p><img loading="lazy" src="/images/elk-2.png" alt="ELK"  />
+</p>
+<p>Add Custom UDP Logs and configure it as bellow</p>
+<p><img loading="lazy" src="/images/elk-3.png" alt="ELK"  />
+</p>
+<p>Then save the integration.</p>
+<p>Keep in mind that Listen Port here is <code>8000</code> which is the one you specified in your <code>.env</code> as <code>LOGSTASH_PORT_UDP</code></p>
+<h2 id="configure-index-pattern">Configure index pattern<a hidden class="anchor" aria-hidden="true" href="#configure-index-pattern">#</a></h2>
+<p>Go to Index Patterns and create an index pattern</p>
+<p><img loading="lazy" src="/images/elk-4.png" alt="ELK"  />
+</p>
+<p><img loading="lazy" src="/images/elk-5.png" alt="ELK"  />
+</p>
+<p>Fill in the fields as the screenshot and Create it.</p>
+<p>You are done here!</p>
+<h2 id="send-your-first-log">Send your first Log<a hidden class="anchor" aria-hidden="true" href="#send-your-first-log">#</a></h2>
+<p>Here is a sample PHP code so you can send your first log to Logstash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$socket <span style="color:#f92672">=</span> <span style="color:#a6e22e">fsockopen</span>(<span style="color:#e6db74">&#39;udp://YOUR-SERVER-IP&#39;</span>, <span style="color:#ae81ff">8000</span>, $errno, $errstr);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span> $socket) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;ERROR: </span><span style="color:#e6db74">$errno</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">$errstr</span><span style="color:#e6db74">&lt;br /&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fwrite</span>($socket, <span style="color:#a6e22e">json_encode</span>([<span style="color:#e6db74">&#39;message&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;Test log message&#39;</span>]));
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fclose</span>($socket);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="view-the-logs">View the Logs<a hidden class="anchor" aria-hidden="true" href="#view-the-logs">#</a></h2>
+<p>After you run the code, You should be able to see the log in the Kibana on the <code>Discovery</code> menu.</p>
+<p>Simply navigate to <code>Discovery</code> page of Kibana and select <code>logstash-*</code> pattern to view the logs you receive</p>
+<p><img loading="lazy" src="/images/elk-6.png" alt="ELK"  />
+</p>
+<p>Cool stuff 😎</p>
+<h2 id="use-logstash-in-laravel">Use Logstash in Laravel<a hidden class="anchor" aria-hidden="true" href="#use-logstash-in-laravel">#</a></h2>
+<p>OK! My favorite part 🙂</p>
+<p>You don’t have much to do here actually. Just need to create a custom log driver and send the logs via that custom driver to Logstash.</p>
+<p>Go to your <code>config/logging.php</code> file and create the custom driver there.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#e6db74">&#39;logstash&#39;</span> <span style="color:#f92672">=&gt;</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;driver&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;custom&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;via&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">\App\Loggers\Logstash</span><span style="color:#f92672">::</span><span style="color:#a6e22e">class</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;host&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">env</span>(<span style="color:#e6db74">&#39;LOGSTASH_HOST&#39;</span>, <span style="color:#e6db74">&#39;YOUR-SERVER-IP&#39;</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;port&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">env</span>(<span style="color:#e6db74">&#39;LOGSTASH_PORT&#39;</span>, <span style="color:#e6db74">&#39;8000&#39;</span>),
+</span></span><span style="display:flex;"><span>],
+</span></span></code></pre></div><p>Now create <code>\App\Loggers\Logstash::class</code> and add the following code there</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Loggers</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Monolog\Formatter\LogstashFormatter</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Monolog\Handler\SocketHandler</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Monolog\Logger</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Monolog\Processor\WebProcessor</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Psr\Log\LoggerInterface</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Logstash</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __invoke(<span style="color:#66d9ef">array</span> $config)<span style="color:#f92672">:</span> <span style="color:#a6e22e">LoggerInterface</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $handler <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SocketHandler</span>(<span style="color:#e6db74">&#34;udp://</span><span style="color:#e6db74">{</span>$config[<span style="color:#e6db74">&#39;host&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>$config[<span style="color:#e6db74">&#39;port&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        $handler<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">setFormatter</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">LogstashFormatter</span>(<span style="color:#a6e22e">config</span>(<span style="color:#e6db74">&#39;app.name&#39;</span>)));
+</span></span><span style="display:flex;"><span>        $handler<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">pushProcessor</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WebProcessor</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Logger</span>(<span style="color:#e6db74">&#39;logstash&#39;</span>, [$handler]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>All done! Now you may send your first log like this</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">Log</span><span style="color:#f92672">::</span><span style="color:#a6e22e">channel</span>(<span style="color:#e6db74">&#39;logstash&#39;</span>)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#39;Hello from Laravel&#39;</span>);
+</span></span></code></pre></div><h2 id="final-word">Final word<a hidden class="anchor" aria-hidden="true" href="#final-word">#</a></h2>
+<p>Logs are always handy, Don’t remove them from your applications 🙂</p>
+<p>I hope you enjoyed the post. Let me know what you think about it.</p>
+<p>See you in the next one!</p>
+<p>Cheers 🍻</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://yecoder.com/tags/elasticsearch/">elasticsearch</a></li>
+      <li><a href="https://yecoder.com/tags/elk/">elk</a></li>
+      <li><a href="https://yecoder.com/tags/kibana/">kibana</a></li>
+      <li><a href="https://yecoder.com/tags/laravel/">laravel</a></li>
+      <li><a href="https://yecoder.com/tags/laravel-log-with-logstash/">laravel-log-with-logstash</a></li>
+      <li><a href="https://yecoder.com/tags/log-php-with-logstash/">log-php-with-logstash</a></li>
+      <li><a href="https://yecoder.com/tags/logging/">logging</a></li>
+      <li><a href="https://yecoder.com/tags/logstash/">logstash</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://yecoder.com/">Yecoder</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

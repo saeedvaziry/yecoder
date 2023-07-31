@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Yecoder</title>
+    <link>https://yecoder.com/posts/</link>
+    <description>Recent content in Posts on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Jul 2023 13:48:44 +0000</lastBuildDate><atom:link href="https://yecoder.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configure Logstash, Elasticsearch, and Kibana with Docker</title>
+      <link>https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/</link>
+      <pubDate>Sat, 22 Jul 2023 13:48:44 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/</guid>
+      <description>It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.</description>
+    </item>
+    
+    <item>
+      <title>DBGate - OpenSource and Modern DB Client</title>
+      <link>https://yecoder.com/posts/dbgate-opensource-and-modern-db-client/</link>
+      <pubDate>Mon, 10 Apr 2023 13:41:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/dbgate-opensource-and-modern-db-client/</guid>
+      <description>DBGate is an open-source database client which has a modern UI.
+I am still checking it but one of the coolest features that I saw was the web application!
+You can install the web application on the server and then you have access to the database with an amazing client!</description>
+    </item>
+    
+    <item>
+      <title>Get one link for all of your links!</title>
+      <link>https://yecoder.com/posts/get-one-link-for-all-of-your-links/</link>
+      <pubDate>Thu, 05 Jan 2023 13:40:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/get-one-link-for-all-of-your-links/</guid>
+      <description>iBio is a FREE and Open Source bio link generator project built with Laravel and Vue.js
+Visit the Website
+Source Code</description>
+    </item>
+    
+    <item>
+      <title>Automated pipeline tests, version bumping and deployments with Gitlab</title>
+      <link>https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/</link>
+      <pubDate>Fri, 19 Aug 2022 13:31:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/</guid>
+      <description>This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:</description>
+    </item>
+    
+    <item>
+      <title>Run PHPUnit tests, multiple times with different data sets</title>
+      <link>https://yecoder.com/posts/run-phpunit-tests-multiple-times-with-different-data-sets/</link>
+      <pubDate>Tue, 12 Jul 2022 13:28:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/run-phpunit-tests-multiple-times-with-different-data-sets/</guid>
+      <description>So most of you might know this, Specially you old-school PHP developers 🙂 but it’s not gonna fill the internet’s capacity so let me be happy by writing this post.
+You might have seen some PHPUnit tests with arguments! Have you asked yourself how it’s possible and who sends those arguments to these tests? The answer is simple! Data Providers
+With PHPUnit, you can define arguments for your test function, and in the DocBlock you mention that there is a data provider for this function, and inside that function just provide the data 🙂</description>
+    </item>
+    
+    <item>
+      <title>Convert picture to Tailwindcss</title>
+      <link>https://yecoder.com/posts/convert-picture-to-tailwindcss/</link>
+      <pubDate>Sun, 05 Jun 2022 13:24:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/convert-picture-to-tailwindcss/</guid>
+      <description>In this video, I’ll show you how you can simply convert a picture of a design to a Tailwindcss code</description>
+    </item>
+    
+    <item>
+      <title>Run Laravel tests on GitHub Actions</title>
+      <link>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</link>
+      <pubDate>Tue, 12 Apr 2022 13:20:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</guid>
+      <description>Imagine yourself in a big team coding on a single project. In our scenario the project is Laravel. There would be tens of Pull Requests waiting to merge but you need to make sure that nothing goes wrong after the merge. Obviously, you’ll have tests in your project but it would be very tricky to go through the all PRs and run the tests on your local.
+GitHub Actions Thanks to GitHub there is a feature called Actions that comes in handy in this case.</description>
+    </item>
+    
+    <item>
+      <title>Mysql auto backup to Dropbox</title>
+      <link>https://yecoder.com/posts/mysql-auto-backup-to-dropbox/</link>
+      <pubDate>Thu, 10 Mar 2022 13:14:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/mysql-auto-backup-to-dropbox/</guid>
+      <description>In this article, I’m gonna show you how you can easily configure an auto backup Mysql database to a Dropbox account using Mysqldump and Cron jobs on an Ubuntu server.
+Set up the Dropbox To store the backup files in Dropbox, You’ll need, of course, a Dropbox account and an API Key associated with it.
+Go to your Dropbox account and generate an API Key and save it.
+Backup Let’s make a backup with the mysqldump command:</description>
+    </item>
+    
+    <item>
+      <title>How to monitor Laravel application servers</title>
+      <link>https://yecoder.com/posts/how-to-monitor-laravel-application-servers/</link>
+      <pubDate>Sun, 20 Feb 2022 12:59:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/how-to-monitor-laravel-application-servers/</guid>
+      <description>Laravel Monitoring is a package by myself so you can monitor your Laravel application’s server resources like CPU, Disk, and Memory
+This package provides a beautiful dashboard with a fancy chart showing the server’s resource usage from one hour to a day.
+Multi-Server support The amazing part of this package which is my favorite part also, Is you can see monitor all of your servers in one place!
+For example, consider that you have several servers running the same source code.</description>
+    </item>
+    
+    <item>
+      <title>Laravel Custom Helpers, Facades, and Testing Fakes</title>
+      <link>https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/</link>
+      <pubDate>Fri, 18 Feb 2022 11:56:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/</guid>
+      <description>Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.
+Commands Since we might have many commands, I would create an interface first.
+// app/Commands/Command.php namespace App\SSHCommands; use App\Contracts\SSHCommand; interface Command { public function content(); } And then an example command.
+// app/Commands/DirectoryListCommand.php namespace App\SSHCommands; use App\Contracts\SSHCommand; class DirectoryListCommand implements Command { public function content() { return &amp;#34;ls -la&amp;#34;; } } Helper Alright.</description>
+    </item>
+    
+    <item>
+      <title>Free IP API</title>
+      <link>https://yecoder.com/posts/free-ip-api/</link>
+      <pubDate>Sat, 12 Feb 2022 23:11:18 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/free-ip-api/</guid>
+      <description>After searching on the Internet for websites that provide a service for getting more information about IP addresses, Like what country they belong to, I decided to create a free one!
+What is an IP API Sometimes we need to know where our users come from, Geolocational I mean. To do this we need to have access to an IP Database to fetch users’ locations according to their IP address.</description>
+    </item>
+    
+  </channel>
+</rss>

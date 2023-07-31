@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>github on Yecoder</title>
+    <link>https://yecoder.com/tags/github/</link>
+    <description>Recent content in github on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 12 Apr 2022 13:20:00 +0000</lastBuildDate><atom:link href="https://yecoder.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Run Laravel tests on GitHub Actions</title>
+      <link>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</link>
+      <pubDate>Tue, 12 Apr 2022 13:20:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</guid>
+      <description>Imagine yourself in a big team coding on a single project. In our scenario the project is Laravel. There would be tens of Pull Requests waiting to merge but you need to make sure that nothing goes wrong after the merge. Obviously, you’ll have tests in your project but it would be very tricky to go through the all PRs and run the tests on your local.
+GitHub Actions Thanks to GitHub there is a feature called Actions that comes in handy in this case.</description>
+    </item>
+    
+  </channel>
+</rss>

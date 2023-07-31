@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>tailwindcss on Yecoder</title>
+    <link>https://yecoder.com/tags/tailwindcss/</link>
+    <description>Recent content in tailwindcss on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jun 2022 13:24:00 +0000</lastBuildDate><atom:link href="https://yecoder.com/tags/tailwindcss/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Convert picture to Tailwindcss</title>
+      <link>https://yecoder.com/posts/convert-picture-to-tailwindcss/</link>
+      <pubDate>Sun, 05 Jun 2022 13:24:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/convert-picture-to-tailwindcss/</guid>
+      <description>In this video, I’ll show you how you can simply convert a picture of a design to a Tailwindcss code</description>
+    </item>
+    
+  </channel>
+</rss>

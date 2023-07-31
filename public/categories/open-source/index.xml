@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Open Source on Yecoder</title>
+    <link>https://yecoder.com/categories/open-source/</link>
+    <description>Recent content in Open Source on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Jul 2023 13:48:44 +0000</lastBuildDate><atom:link href="https://yecoder.com/categories/open-source/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configure Logstash, Elasticsearch, and Kibana with Docker</title>
+      <link>https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/</link>
+      <pubDate>Sat, 22 Jul 2023 13:48:44 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/configure-logstash-elasticsearch-and-kibana-with-docker/</guid>
+      <description>It was a long time ago I wanted to write this post and show you how to set up a docker-compose with all you need to have a separate logging system.
+Logging is a meaningful way to monitor your application’s behavior. When it comes to production and having multiple servers running one application in different instances, You might want to have a unified logging system to check them all in one place.</description>
+    </item>
+    
+    <item>
+      <title>DBGate - OpenSource and Modern DB Client</title>
+      <link>https://yecoder.com/posts/dbgate-opensource-and-modern-db-client/</link>
+      <pubDate>Mon, 10 Apr 2023 13:41:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/dbgate-opensource-and-modern-db-client/</guid>
+      <description>DBGate is an open-source database client which has a modern UI.
+I am still checking it but one of the coolest features that I saw was the web application!
+You can install the web application on the server and then you have access to the database with an amazing client!</description>
+    </item>
+    
+    <item>
+      <title>How to monitor Laravel application servers</title>
+      <link>https://yecoder.com/posts/how-to-monitor-laravel-application-servers/</link>
+      <pubDate>Sun, 20 Feb 2022 12:59:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/how-to-monitor-laravel-application-servers/</guid>
+      <description>Laravel Monitoring is a package by myself so you can monitor your Laravel application’s server resources like CPU, Disk, and Memory
+This package provides a beautiful dashboard with a fancy chart showing the server’s resource usage from one hour to a day.
+Multi-Server support The amazing part of this package which is my favorite part also, Is you can see monitor all of your servers in one place!
+For example, consider that you have several servers running the same source code.</description>
+    </item>
+    
+  </channel>
+</rss>

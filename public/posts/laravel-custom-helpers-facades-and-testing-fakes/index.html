@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Laravel Custom Helpers, Facades, and Testing Fakes | Yecoder</title>
+<meta name="keywords" content="laravel, laravel testing fakes, php, tests">
+<meta name="description" content="Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.
+Commands Since we might have many commands, I would create an interface first.
+// app/Commands/Command.php namespace App\SSHCommands; use App\Contracts\SSHCommand; interface Command { public function content(); } And then an example command.
+// app/Commands/DirectoryListCommand.php namespace App\SSHCommands; use App\Contracts\SSHCommand; class DirectoryListCommand implements Command { public function content() { return &#34;ls -la&#34;; } } Helper Alright.">
+<meta name="author" content="Saeed Vaziry">
+<link rel="canonical" href="https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://yecoder.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://yecoder.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yecoder.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://yecoder.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://yecoder.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Laravel Custom Helpers, Facades, and Testing Fakes" />
+<meta property="og:description" content="Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.
+Commands Since we might have many commands, I would create an interface first.
+// app/Commands/Command.php namespace App\SSHCommands; use App\Contracts\SSHCommand; interface Command { public function content(); } And then an example command.
+// app/Commands/DirectoryListCommand.php namespace App\SSHCommands; use App\Contracts\SSHCommand; class DirectoryListCommand implements Command { public function content() { return &#34;ls -la&#34;; } } Helper Alright." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-18T11:56:00+00:00" />
+<meta property="article:modified_time" content="2022-02-18T11:56:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Laravel Custom Helpers, Facades, and Testing Fakes"/>
+<meta name="twitter:description" content="Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.
+Commands Since we might have many commands, I would create an interface first.
+// app/Commands/Command.php namespace App\SSHCommands; use App\Contracts\SSHCommand; interface Command { public function content(); } And then an example command.
+// app/Commands/DirectoryListCommand.php namespace App\SSHCommands; use App\Contracts\SSHCommand; class DirectoryListCommand implements Command { public function content() { return &#34;ls -la&#34;; } } Helper Alright."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://yecoder.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Laravel Custom Helpers, Facades, and Testing Fakes",
+      "item": "https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Laravel Custom Helpers, Facades, and Testing Fakes",
+  "name": "Laravel Custom Helpers, Facades, and Testing Fakes",
+  "description": "Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.\nCommands Since we might have many commands, I would create an interface first.\n// app/Commands/Command.php namespace App\\SSHCommands; use App\\Contracts\\SSHCommand; interface Command { public function content(); } And then an example command.\n// app/Commands/DirectoryListCommand.php namespace App\\SSHCommands; use App\\Contracts\\SSHCommand; class DirectoryListCommand implements Command { public function content() { return \u0026#34;ls -la\u0026#34;; } } Helper Alright.",
+  "keywords": [
+    "laravel", "laravel testing fakes", "php", "tests"
+  ],
+  "articleBody": "Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.\nCommands Since we might have many commands, I would create an interface first.\n// app/Commands/Command.php namespace App\\SSHCommands; use App\\Contracts\\SSHCommand; interface Command { public function content(); } And then an example command.\n// app/Commands/DirectoryListCommand.php namespace App\\SSHCommands; use App\\Contracts\\SSHCommand; class DirectoryListCommand implements Command { public function content() { return \"ls -la\"; } } Helper Alright. Now we want to create a Helper to use the commands. I rather create it in app/Helpers path.\n// app/Helpers/SSH.php namespace App\\Helpers; use App\\SSHCommands\\Command; class SSH { /** * @param Command $command * @return void */ public function exec($command) { // } } Facade To use this Helper in our application we’ll use Laravel’s Facades.\n// app/Facades/SSH.php namespace App\\Facades; use Illuminate\\Support\\Facades\\Facade; /** * Class SSH * * @package App\\Facades * * @method static exec($command) */ class SSH extends Facade { /** * Get the registered name of the component. * * @return string */ protected static function getFacadeAccessor() { return 'ssh'; } } Now, Let’s register our Facade in the AppServiceProvider.php\nnamespace App\\Providers; use Illuminate\\Support\\ServiceProvider; class AppServiceProvider extends ServiceProvider { /** * Register any application services. * * @return void */ public function register() { // } /** * Bootstrap any application services. * * @return void */ public function boot() { $this-\u003eapp-\u003ebind('ssh', function () { return new \\App\\Helpers\\SSH; }); } } Perfect! We can use the helper in the application by simply calling the facade.\n\\App\\Facades\\SSH::exec(new DirectoryListCommand()); To make it easy to use, You can register the SSH Facade in your config/app.php under the aliases\n'aliases' =\u003e [ ... 'View' =\u003e Illuminate\\Support\\Facades\\View::class, ... ], Then you can use it like bellow\nSSH::exec(new DirectoryListCommand()); Testing When it comes to testing, The problem is you can’t really test the SSH because it is connecting to a remote server, and in the testing environment you don’t have a remote server! So what we can do?!\nThe answer is faking! We must fake the exec command.\nLet’s create a fake SSH class. I would like to create in app/Support/Testing path.\nnamespace App\\Support\\Testing; use PHPUnit\\Framework\\Assert as PHPUnit; class SSHFake { /** * @var \\App\\SSHCommands\\Command */ protected $executedCommand; /** * @param \\App\\SSHCommands\\Command $command * @return void */ public function exec($command) { $this-\u003eexecutedCommand = get_class($command); } /** * @param \\App\\SSHCommands\\Command $command * @return void */ public function assertExecuted($command) { if (!$this-\u003eexecutedCommand) { PHPUnit::fail(\"No command executed\"); } PHPUnit::assertTrue( true, $this-\u003eexecutedCommand === $command ); } } Let me explain the idea. I just simulated the SSH helper here with a small difference which means that I faked it. instead of executing the command on the remote server, I am adding the command’s class name to the executedCommand property. And then, in the assertExecuted method, I am making sure that the command is executed (stored in the executedCommand property) 😊\nThe final step is to make the Facade recognize the faked Helper.\nLet’s back to the SSH Facade and make a small change.\n// app/Facades/SSH.php namespace App\\Facades; use Illuminate\\Support\\Facades\\Facade; use App\\Support\\Testing\\SSHFake; /** * Class SSH * * @package App\\Facades * * @method static exec($command) * @method static assertExecuted($command) */ class SSH extends Facade { /** * Replace the bound instance with a fake. * * @return \\App\\Support\\Testing\\SSHFake */ public static function fake() { static::swap($fake = new SSHFake()); return $fake; } /** * Get the registered name of the component. * * @return string */ protected static function getFacadeAccessor() { return 'ssh'; } } I’ve created a static method named fake which returns an instance of the faked one! I’ve used the swap method of the Facade facade 🙂\nAnd now we can test the Helper very easily. Here is an example test:\nnamespace Tests\\Feature; use App\\Facades\\SSH; use App\\SSHCommands\\DirectoryListCommand; use Tests\\TestCase; class ExampleTest extends TestCase { public function test_ssh_command() { SSH::fake(); SSH::exec(new DirectoryListCommand()); SSH::assertExecuted(DirectoryListCommand::class); } } That’s it! 🎉\nThanks for reading this post. Hope you enjoyed it!\nI’ll be happy to read your comments about this.\n",
+  "wordCount" : "668",
+  "inLanguage": "en",
+  "datePublished": "2022-02-18T11:56:00Z",
+  "dateModified": "2022-02-18T11:56:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Saeed Vaziry"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yecoder.com/posts/laravel-custom-helpers-facades-and-testing-fakes/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yecoder",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://yecoder.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://yecoder.com/" accesskey="h" title="Yecoder (Alt + H)">Yecoder</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://yecoder.com/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yecoder.com/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Laravel Custom Helpers, Facades, and Testing Fakes
+    </h1>
+    <div class="post-meta"><span title='2022-02-18 11:56:00 +0000 +0000'>February 18, 2022</span>&nbsp;·&nbsp;Saeed Vaziry
+
+</div>
+  </header> 
+  <div class="post-content"><p>Let’s consider that we want to create a custom helper named SSH. This helper is going to connect to a remote server via ssh and execute some commands.</p>
+<h3 id="commands">Commands<a hidden class="anchor" aria-hidden="true" href="#commands">#</a></h3>
+<p>Since we might have many commands, I would create an interface first.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">// app/Commands/Command.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\SSHCommands</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\Contracts\SSHCommand</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Command</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">content</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And then an example command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">// app/Commands/DirectoryListCommand.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\SSHCommands</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\Contracts\SSHCommand</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DirectoryListCommand</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">Command</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">content</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;ls -la&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="helper">Helper<a hidden class="anchor" aria-hidden="true" href="#helper">#</a></h3>
+<p>Alright. Now we want to create a Helper to use the commands. I rather create it in <code>app/Helpers</code> path.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">// app/Helpers/SSH.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Helpers</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\SSHCommands\Command</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SSH</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param Command $command
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return void
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">exec</span>($command)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="facade">Facade<a hidden class="anchor" aria-hidden="true" href="#facade">#</a></h3>
+<p>To use this Helper in our application we’ll use Laravel’s Facades.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">// app/Facades/SSH.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Facades</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Illuminate\Support\Facades\Facade</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Class SSH
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @package App\Facades
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @method static exec($command)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SSH</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Facade</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * Get the registered name of the component.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return string
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getFacadeAccessor</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;ssh&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now, Let’s register our Facade in the <code>AppServiceProvider.php</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Providers</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Illuminate\Support\ServiceProvider</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppServiceProvider</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">ServiceProvider</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * Register any application services.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return void
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">register</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * Bootstrap any application services.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return void
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">boot</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">app</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bind</span>(<span style="color:#e6db74">&#39;ssh&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\App\Helpers\SSH</span>;
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Perfect! We can use the helper in the application by simply calling the facade.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">\App\Facades\SSH</span><span style="color:#f92672">::</span><span style="color:#a6e22e">exec</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">DirectoryListCommand</span>());
+</span></span></code></pre></div><p>To make it easy to use, You can register the SSH Facade in your <code>config/app.php</code> under the <code>aliases</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#e6db74">&#39;aliases&#39;</span> <span style="color:#f92672">=&gt;</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;View&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">Illuminate\Support\Facades\View</span><span style="color:#f92672">::</span><span style="color:#a6e22e">class</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>],
+</span></span></code></pre></div><p>Then you can use it like bellow</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">SSH</span><span style="color:#f92672">::</span><span style="color:#a6e22e">exec</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">DirectoryListCommand</span>());
+</span></span></code></pre></div><h3 id="testing">Testing<a hidden class="anchor" aria-hidden="true" href="#testing">#</a></h3>
+<p>When it comes to testing, The problem is you can’t really test the SSH because it is connecting to a remote server, and in the testing environment you don’t have a remote server! So what we can do?!</p>
+<p>The answer is faking! We must fake the <code>exec</code> command.</p>
+<p>Let’s create a fake SSH class. I would like to create in <code>app/Support/Testing</code> path.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Support\Testing</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">PHPUnit\Framework\Assert</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">PHPUnit</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SSHFake</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @var \App\SSHCommands\Command
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> $executedCommand;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param \App\SSHCommands\Command $command
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return void
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">exec</span>($command)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">executedCommand</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_class</span>($command);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param \App\SSHCommands\Command $command
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return void
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">assertExecuted</span>($command)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">executedCommand</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">PHPUnit</span><span style="color:#f92672">::</span><span style="color:#a6e22e">fail</span>(<span style="color:#e6db74">&#34;No command executed&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PHPUnit</span><span style="color:#f92672">::</span><span style="color:#a6e22e">assertTrue</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>            $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">executedCommand</span> <span style="color:#f92672">===</span> $command
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let me explain the idea. I just simulated the SSH helper here with a small difference which means that I faked it. instead of executing the command on the remote server, I am adding the command’s class name to the <code>executedCommand</code> property. And then, in the <code>assertExecuted</code> method, I am making sure that the command is executed (stored in the <code>executedCommand</code> property) 😊</p>
+<p>The final step is to make the Facade recognize the faked Helper.</p>
+<p>Let’s back to the SSH Facade and make a small change.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">// app/Facades/SSH.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">App\Facades</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Illuminate\Support\Facades\Facade</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\Support\Testing\SSHFake</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Class SSH
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @package App\Facades
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @method static exec($command)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @method static assertExecuted($command)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SSH</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Facade</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * Replace the bound instance with a fake.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return \App\Support\Testing\SSHFake
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fake</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span><span style="color:#f92672">::</span><span style="color:#a6e22e">swap</span>($fake <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SSHFake</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $fake;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * Get the registered name of the component.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return string
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getFacadeAccessor</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;ssh&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I’ve created a static method named <code>fake</code> which returns an instance of the faked one! I’ve used the swap method of the Facade facade 🙂</p>
+<p>And now we can test the Helper very easily. Here is an example test:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Tests\Feature</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\Facades\SSH</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">App\SSHCommands\DirectoryListCommand</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Tests\TestCase</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExampleTest</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">TestCase</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test_ssh_command</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">SSH</span><span style="color:#f92672">::</span><span style="color:#a6e22e">fake</span>();
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">SSH</span><span style="color:#f92672">::</span><span style="color:#a6e22e">exec</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">DirectoryListCommand</span>());
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">SSH</span><span style="color:#f92672">::</span><span style="color:#a6e22e">assertExecuted</span>(<span style="color:#a6e22e">DirectoryListCommand</span><span style="color:#f92672">::</span><span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>That’s it! 🎉</p>
+<p>Thanks for reading this post. Hope you enjoyed it!</p>
+<p>I’ll be happy to read your comments about this.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://yecoder.com/tags/laravel/">laravel</a></li>
+      <li><a href="https://yecoder.com/tags/laravel-testing-fakes/">laravel testing fakes</a></li>
+      <li><a href="https://yecoder.com/tags/php/">php</a></li>
+      <li><a href="https://yecoder.com/tags/tests/">tests</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://yecoder.com/">Yecoder</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

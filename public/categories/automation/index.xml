@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Automation on Yecoder</title>
+    <link>https://yecoder.com/categories/automation/</link>
+    <description>Recent content in Automation on Yecoder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 Aug 2022 13:31:00 +0000</lastBuildDate><atom:link href="https://yecoder.com/categories/automation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated pipeline tests, version bumping and deployments with Gitlab</title>
+      <link>https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/</link>
+      <pubDate>Fri, 19 Aug 2022 13:31:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/</guid>
+      <description>This is one of my favorite topics! Setting up a fully automated deployment.
+I want to share with you how to set up a fully automated deployment including tests and version bumping.
+I am using PHP and Laravel as the sample project but please keep in mind that this post is not limited to Laravel and PHP only!
+If you don’t want to read the post and jump to the Repo:</description>
+    </item>
+    
+    <item>
+      <title>Run Laravel tests on GitHub Actions</title>
+      <link>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</link>
+      <pubDate>Tue, 12 Apr 2022 13:20:00 +0000</pubDate>
+      
+      <guid>https://yecoder.com/posts/run-laravel-tests-on-github-actions/</guid>
+      <description>Imagine yourself in a big team coding on a single project. In our scenario the project is Laravel. There would be tens of Pull Requests waiting to merge but you need to make sure that nothing goes wrong after the merge. Obviously, you’ll have tests in your project but it would be very tricky to go through the all PRs and run the tests on your local.
+GitHub Actions Thanks to GitHub there is a feature called Actions that comes in handy in this case.</description>
+    </item>
+    
+  </channel>
+</rss>
