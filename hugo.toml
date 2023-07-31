@@ -2,7 +2,7 @@ baseURL = 'https://yecoder.com/'
 languageCode = 'en-us'
 title = 'Yecoder'
 theme = "PaperMod"
-googleAnalytics = "G-53T0X7ETXQ"
+googleAnalytics = "G-72T780BFYS"
 
 [menu]
   [[menu.main]]
