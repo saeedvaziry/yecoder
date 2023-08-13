@@ -3,8 +3,7 @@ title: 'Automated pipeline tests, version bumping and deployments with Gitlab'
 date: '2022-08-19T13:31:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/
-image: /wp-content/uploads/2023/06/automated-gitlab-pipelines.png
+url: /posts/automated-pipeline-tests-version-bumping-and-deployments-with-gitlab/
 categories:
     - Automation
     - Laravel

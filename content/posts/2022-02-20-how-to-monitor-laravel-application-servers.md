@@ -3,7 +3,7 @@ title: 'How to monitor Laravel application servers'
 date: '2022-02-20T12:59:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/how-to-monitor-laravel-application-servers/
+url: /posts/how-to-monitor-laravel-application-servers/
 categories:
     - Laravel
     - 'Open Source'

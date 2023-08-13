@@ -3,7 +3,7 @@ title: 'Convert picture to Tailwindcss'
 date: '2022-06-05T13:24:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/convert-picture-to-tailwindcss/
+url: /posts/convert-picture-to-tailwindcss/
 categories:
     - CSS
     - Tailwind

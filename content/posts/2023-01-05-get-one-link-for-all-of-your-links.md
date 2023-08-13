@@ -3,7 +3,7 @@ title: 'Get one link for all of your links!'
 date: '2023-01-05T13:40:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/get-one-link-for-all-of-your-links/
+url: /posts/get-one-link-for-all-of-your-links/
 categories:
     - Products
 tags:

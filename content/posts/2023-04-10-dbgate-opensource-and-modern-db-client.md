@@ -3,7 +3,7 @@ title: 'DBGate - OpenSource and Modern DB Client'
 date: '2023-04-10T13:41:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/dbgate-opensource-and-modern-db-client/
+url: /posts/dbgate-opensource-and-modern-db-client/
 categories:
     - database
     - 'Open Source'

@@ -3,7 +3,7 @@ title: 'Run PHPUnit tests, multiple times with different data sets'
 date: '2022-07-12T13:28:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/run-phpunit-tests-multiple-times-with-different-data-sets/
+url: /posts/run-phpunit-tests-multiple-times-with-different-data-sets/
 categories:
     - PHP
     - PHPUnit

@@ -3,7 +3,7 @@ title: 'Laravel Custom Helpers, Facades, and Testing Fakes'
 date: '2022-02-18T11:56:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/laravel-custom-helpers-facades-and-testing-fakes/
+url: /posts/laravel-custom-helpers-facades-and-testing-fakes/
 categories:
     - Laravel
 tags:

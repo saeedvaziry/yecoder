@@ -3,7 +3,7 @@ title: 'Run Laravel tests on GitHub Actions'
 date: '2022-04-12T13:20:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/run-laravel-tests-on-github-actions/
+url: /posts/run-laravel-tests-on-github-actions/
 categories:
     - Automation
     - Laravel

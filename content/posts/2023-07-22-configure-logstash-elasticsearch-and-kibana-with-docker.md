@@ -3,7 +3,7 @@ title: 'Configure Logstash, Elasticsearch, and Kibana with Docker'
 date: '2023-07-22T13:48:44+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/configure-logstash-elasticsearch-and-kibana-with-docker/
+url: /posts/configure-logstash-elasticsearch-and-kibana-with-docker/
 categories:
     - Devops
     - Docker

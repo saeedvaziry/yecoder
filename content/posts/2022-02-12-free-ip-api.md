@@ -3,7 +3,7 @@ title: 'Free IP API'
 date: '2022-02-12T23:11:18+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/free-ip-api/
+url: /posts/free-ip-api/
 categories:
     - Products
 ---

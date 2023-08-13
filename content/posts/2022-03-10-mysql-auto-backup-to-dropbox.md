@@ -3,7 +3,7 @@ title: 'Mysql auto backup to Dropbox'
 date: '2022-03-10T13:14:00+00:00'
 author: Saeed Vaziry
 layout: post
-permalink: /posts/mysql-auto-backup-to-dropbox/
+url: /posts/mysql-auto-backup-to-dropbox/
 categories:
     - database
     - Linux
