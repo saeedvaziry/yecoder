@@ -1,1 +1,1 @@
-vless://e1bcd220-7d68-48a8-b126-f34f8b2b4d40@3.71.109.238:8443?type=tcp&security=reality&fp=firefox&pbk=D8UwcVp605Whumvd6F2AR2fQF6k0fdKbSYBQ1ej7yng&sni=ftp.debian.org&flow=xtls-rprx-vision&sid=2fdf7cb4&spx=%2Fmathmorti#germany-1
+vless://e1bcd220-7d68-48a8-b126-f34f8b2b4d40@r.vito.team:8443?type=tcp&security=reality&fp=firefox&pbk=D8UwcVp605Whumvd6F2AR2fQF6k0fdKbSYBQ1ej7yng&sni=ftp.debian.org&flow=xtls-rprx-vision&sid=2fdf7cb4&spx=%2Fmathmorti#germany-1
